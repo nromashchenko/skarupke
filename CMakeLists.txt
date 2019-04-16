@@ -1,21 +1,39 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
-project(builder VERSION 0.1.0 LANGUAGES CXX)
+project(builder VERSION 1.0.0 LANGUAGES CXX)
 
 add_library(flat_hash_map INTERFACE)
+add_library(skarupke::flat_hash_map ALIAS flat_hash_map)
 
 target_include_directories(flat_hash_map
         INTERFACE
-            flat_hash_map
+            $<INSTALL_INTERFACE:include>
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         )
 
+###################################################################################################
+# Installation instructions
+
+include(GNUInstallDirs)
+set(INSTALL_CONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/skarupke)
+
 install(TARGETS flat_hash_map
-        EXPORT flat_hash_mapTargets
+        EXPORT skarupke-targets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+        )
 
-export(TARGETS flat_hash_map
-        FILE ${CMAKE_BINARY_DIR}/skarupkeConfig.cmake)
+install(DIRECTORY include/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+# Export the target
+install(EXPORT skarupke-targets
+        FILE skarupkeTargets.cmake
+        NAMESPACE skarupke::
+        DESTINATION ${INSTALL_CONFIGDIR}
+        )
+
+export(EXPORT skarupke-targets
+        FILE ${CMAKE_CURRENT_BINARY_DIR}/skarupkeTargets.cmake
+        NAMESPACE skarupke::)
 
 export(PACKAGE skarupke)
