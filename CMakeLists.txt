@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
-project(builder VERSION 1.0.0 LANGUAGES CXX)
+project(skarupke VERSION 1.0.0 LANGUAGES CXX)
 
 add_library(flat_hash_map INTERFACE)
 add_library(skarupke::flat_hash_map ALIAS flat_hash_map)
