@@ -1,4 +1,4 @@
-This is a CMake wrapper for the skarupke/flat_hash_map library (https://github.com/skarupke/flat_hash_map).
+This is a CMake wrapper for [skarupke/flat_hash_map](https://github.com/skarupke/flat_hash_map).
 
 ## Usage
 Make this repository a submodule of your project. Then add in your CMakeLists.txt:
